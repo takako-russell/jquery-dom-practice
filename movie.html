@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.js"
+      integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <title>Movie Rating</title>
+    <div id="movie-list"></div>
+    <form id="movie-form">
+      <div id="input-wrapper">
+        <input type="text" placeholder="title" id="title-input" />
+        <input type="text" placeholder="rating" id="rating-input" />
+        <button type="submit" id="submit-btn">submit</button>
+      </div>
+    </form>
+  </body>
+  <script>
+    $(function () {
+      let listCount = 0;
+      let listIndx = 0;
+      $("#movie-form").on("submit", function (e) {
+        e.preventDefault();
+        let movieTitle = $("#title-input").val();
+        let movieRating = $("#rating-input").val();
+        let movieRowDiv = $(
+          `<div id='movie-${listCount}' class='new-movie'></div>`
+        );
+        let removeBtn = $(
+          `<button id = 'remove-btn-${listCount}'>Remove</button>`
+        );
+        $("#movie-list").append(movieRowDiv);
+        $(".new-movie").css("display", "flex");
+        $(".new-movie").css("list-style-type", "none");
+        $(".new-movie")
+          .eq(listIndx)
+          .append(`<li>${movieTitle} - ${movieRating}</li>`)
+          .prepend(removeBtn);
+        console.log(listCount);
+        listCount++;
+        listIndx++;
+        $("#title-input").val("");
+        $("#rating-input").val("");
+        removeBtn.click(function () {
+          movieRowDiv.remove();
+          listIndx--;
+        });
+      });
+    });
+  </script>
+</html>
